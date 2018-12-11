@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route} from "react-router-dom";
 import Header from './Header';
 import FeaturedMix from './FeaturedMix';
+import Home from './Home';
 
-const Home = () => <h1>Home</h1>;
+
 const About = () => <h1>Home</h1>;
 const Archive = () => <h1>Home</h1>;
 
@@ -42,6 +43,9 @@ class App extends Component {
   };
 
   playMix = mixName => {
+    this.setState({
+      currentMix: mixName
+    })
     this.widget.load(mixName, true);
   };
 
@@ -49,18 +53,23 @@ class App extends Component {
     return (
       <Router>
         <div>
-        <div className="flex-1 justify-end"> 
+        <div className="flex-l justify-end"> 
           <FeaturedMix/>
           <div className="w-50-l relative z-1 ">
           <Header></Header>
           <div> 
-            <button onClick={this.togglePlay}>
-           { this.state.playing ? 'Pause' : 'Play'}
-           </button>
+            {this.state.playing && (
+              <button onClick={this.togglePlay}>
+              { this.state.playing ? 'Pause' : 'Play'}
+              </button>
+            )};
           </div>
           <div>
+            <h1>currently playing: {this.state.currentMix} </h1> 
             <button onClick={() => this.playMix
-            ('/NTSRadio/bonobo-24th-june-2015/')}>Play mix</button>
+            ('/NTSRadio/bonobo-24th-june-2015/')}>Play bonobo mix</button>
+            <button onClick={() => this.playMix
+            ('/NTSRadio/floating-points-four-tet-16th-march-2017/')}>Play four-tet mix</button>
           </div>
           { /* Routed page*/}
           <Route exact path="/" component={Home}/>
